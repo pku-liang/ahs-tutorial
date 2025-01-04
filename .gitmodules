@@ -1,0 +1,4 @@
+[submodule "cmt2"]
+	path = cmt2
+	url = git@github.com:uv-xiao/cmt2.git
+	branch = dev
