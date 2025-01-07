@@ -2,3 +2,19 @@
 	path = cmt2
 	url = git@github.com:uv-xiao/cmt2.git
 	branch = dev
+[submodule "hestia"]
+	path = hestia
+	url = git@github.com:pku-liang/hestia.git
+	branch = main
+[submodule "Hector"]
+	path = Hector
+	url = git@github.com:pku-liang/Hector.git
+	branch = tutorial-aspdac
+[submodule "popa"]
+	path = popa
+	url = git@github.com:pku-liang/popa.git
+	branch = mlir
+[submodule "ksim"]
+	path = ksim
+	url = git@github.com:pku-liang/ksim.git
+	branch = aspdac24-tutorial
