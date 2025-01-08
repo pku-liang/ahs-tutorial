@@ -18,3 +18,7 @@
 	path = ksim
 	url = git@github.com:pku-liang/ksim.git
 	branch = aspdac24-tutorial
+[submodule "llvm-project"]
+	path = llvm-project
+	url = git@github.com:llvm/llvm-project.git
+	branch = cbc378ecb87e3f31dd5aff91f2a621d500640412
