@@ -6,10 +6,14 @@ tar -xvf firrtl-bin-linux-x64.tar.gz
 cp -rf ./firtool-1.86.0/* $HOME/.local/
 
 echo "Building cmt2..."
-cd cmt2 && cargo build --release --all && cd ..
+cd cmt2
+git submodule update --init --recursive
+cargo build --release --all
+cd ..
 
 echo "Building hestia..."
-cd hestia && cargo build --release --all && cd ..
+cd hestia && cargo build --release --all
+cd ..
 
 LLVM_COMMIT="cbc378ecb87e3f31dd5aff91f2a621d500640412"
 echo "Building mlir, at llvm-project commit $LLVM_COMMIT"
