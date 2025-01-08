@@ -18,11 +18,11 @@ docker pull ericlyun/ahs-tutorial:latest
 
 #### Building Docker Image from Source
 
-You can refer to [ahs-docker](https://github.com/arch-of-shadow/ahs-docker) for instructions.
+You can refer to [ahs-docker](https://github.com/pku-liang/ahs-docker) for instructions.
 
 ### Local Installation
 
-We also provide a local installation script for the tutorial. Some prerequisites are required, please refer to [Dockerfile](https://github.com/arch-of-shadow/ahs-docker/blob/main/Dockerfile) as a reference.
+We also provide a local installation script for the tutorial. Some prerequisites are required, please refer to [Dockerfile](https://github.com/pku-liang/ahs-docker/blob/main/Dockerfile) as a reference.
 
 Then, you can run the following commands to install the frameworks:
 
