@@ -13,7 +13,7 @@ We recommend using Docker to try out the frameworks.
 We provide a built Docker image for the tutorial. You can pull it from Docker Hub:
 
 ```bash
-docker pull ericlyun/ahs-tutorial:latest
+docker pull uvxiao/ahs-tutorial:aspdac2025
 ```
 
 #### Building Docker Image from Source
