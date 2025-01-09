@@ -105,11 +105,23 @@ else
     echo "|-- already exists"
 fi
 
+echo "Building iverilog..."
+if ! grep -q "iverilog" install.log; then
+    cd iverilog
+    sh autoconf.sh
+    ./configure --prefix=$HOME/.local
+    make
+    make install
+    cd ..
+    echo "iverilog built" >> install.log
+else
+    echo "|-- already exists"
+fi
 
 # check ksim, firtool-ksim, llc-ksim can be found 
 # Check if required tools exist in PATH
 echo "Checking binary existence..."
-for tool in firtool ksim firtool-ksim llc-ksim; do
+for tool in firtool ksim firtool-ksim llc-ksim iverilog; do
     if ! command -v $tool &> /dev/null; then
         echo "Error: $tool not found in PATH"
         exit 1
