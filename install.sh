@@ -32,6 +32,7 @@ fi
 echo "Building hestia..."
 if ! grep -q "hestia" install.log; then
     cd hestia && cargo build --release --all
+    cargo install --path .
     cd ..
     echo "hestia built" >> install.log
 else
