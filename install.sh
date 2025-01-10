@@ -5,6 +5,9 @@ set -e
 # use install.log to record the installation process
 touch install.log
 
+
+mkdir -p $HOME/.local/bin
+
 echo "Downloading firtool-1.86.0..."
 if ! grep -q "firtool-1.86.0" install.log; then
     wget https://github.com/llvm/circt/releases/download/firtool-1.86.0/firrtl-bin-linux-x64.tar.gz
@@ -15,7 +18,7 @@ else
     echo "|-- already exists"
 fi
 
-    echo "Building cmt2..."
+echo "Building cmt2..."
 if ! grep -q "cmt2" install.log; then
     cd cmt2
     git submodule update --init --recursive
@@ -62,6 +65,7 @@ if ! grep -q "hector" install.log; then
     git submodule update --init --recursive
     cmake -G Ninja -DMLIR_DIR=../llvm-project/build/lib/cmake/mlir -B build
     cmake --build build
+    cp ./build/bin/* $HOME/.local/bin/
     cd ..
     echo "hector built" >> install.log
 else
@@ -72,8 +76,9 @@ echo "Building popa..."
 if ! grep -q "popa" install.log; then
     export PATH=$PWD/llvm-project/install/bin:$PATH
     cd popa
-    LLVM_DIR=../llvm-project/build/lib/cmake/llvm cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -B build
+    LLVM_DIR=../llvm-project/install/lib/cmake/llvm cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -B build
     cmake --build build
+    cmake --install build --prefix install
     cd ..
     echo "popa built" >> install.log
 else
@@ -91,7 +96,7 @@ if ! grep -q "ksim" install.log; then
     ./setup-lemon.sh
     cd ..
     mkdir -p build && cd build
-    cmake .. -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DCMAKE_BUILD_TYPE=Release -GNinja
+    cmake .. -DMLIR_DIR=../install/lib/cmake/mlir -DLLVM_DIR=../install/lib/cmake/llvm -DCIRCT_DIR=../install/lib/cmake/circt -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DCMAKE_BUILD_TYPE=Release -GNinja
     ninja ksim ksim-opt
     ninja install
     echo "cp ksim->$HOME/.local/bin/ksim, firtool->$HOME/.local/bin/firtool-ksim, llc->$HOME/.local/bin/llc-ksim"
@@ -117,6 +122,9 @@ if ! grep -q "iverilog" install.log; then
 else
     echo "|-- already exists"
 fi
+
+echo "Cleaning up..."
+make clean
 
 # check ksim, firtool-ksim, llc-ksim can be found 
 # Check if required tools exist in PATH
