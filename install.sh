@@ -82,6 +82,7 @@ if ! grep -q "popa" install.log; then
     cmake --install build --prefix install
     cd ..
     ln -s popa/examples/hls-tutorial.sh ./hls-tutorial.sh
+    chmod +x hls-tutorial.sh
     echo "popa built" >> install.log
 else
     echo "|-- already exists"
