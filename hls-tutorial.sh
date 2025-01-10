@@ -22,7 +22,8 @@ run_popa() {
 run_hector() {
     hestia_run=$(readlink -f $HESTIA_DIR/target/release/hestia)
     pushd $HECTOR_DIR
-    ./build/bin/hector-opt $1 --canonicalize --hls-unroll --affine-loop-normalize --canonicalize --new-array-partition --canonicalize --remove-access=mode=aggressive --lower-affine \
+    which hector-opt
+    hector-opt $1 --canonicalize --hls-unroll --affine-loop-normalize --canonicalize --new-array-partition --canonicalize --remove-access=mode=aggressive --lower-affine \
         --convert-input="top-function=_kernel_C_s0_run_on_device resource=./examples/resource_dynamatic.json" --dump-scf --scf-to-tor="pipeline" --schedule-tor --split-schedule --dump-tor="json=tor.json" &>/dev/null
     $hestia_run tor.tcl
     popd
