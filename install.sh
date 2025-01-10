@@ -81,6 +81,7 @@ if ! grep -q "popa" install.log; then
     cmake --build build
     cmake --install build --prefix install
     cd ..
+    ln -s popa/examples/hls-tutorial.sh ./hls-tutorial.sh
     echo "popa built" >> install.log
 else
     echo "|-- already exists"
@@ -130,11 +131,12 @@ make clean
 # check ksim, firtool-ksim, llc-ksim can be found 
 # Check if required tools exist in PATH
 echo "Checking binary existence..."
-for tool in firtool ksim firtool-ksim llc-ksim iverilog; do
+for tool in hestia hector-opt vvp firtool ksim firtool-ksim llc-ksim iverilog; do
     if ! command -v $tool &> /dev/null; then
         echo "Error: $tool not found in PATH"
         exit 1
     fi
 done
+
 
 echo "Installation completed" >> install.log
