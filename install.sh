@@ -98,7 +98,7 @@ if ! grep -q "ksim" install.log; then
     ./setup-lemon.sh
     cd ..
     mkdir -p build && cd build
-    cmake .. -DMLIR_DIR=../install/lib/cmake/mlir -DLLVM_DIR=../install/lib/cmake/llvm -DCIRCT_DIR=../install/lib/cmake/circt -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DCMAKE_BUILD_TYPE=Release -GNinja
+    cmake .. -DMLIR_DIR=$INSTALL_PREFIX/install/lib/cmake/mlir -DLLVM_DIR=$INSTALL_PREFIX/install/lib/cmake/llvm -DCIRCT_DIR=$INSTALL_PREFIX/install/lib/cmake/circt -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DCMAKE_BUILD_TYPE=Release -GNinja
     ninja ksim ksim-opt
     ninja install
     echo "cp ksim->$HOME/.local/bin/ksim, firtool->$HOME/.local/bin/firtool-ksim, llc->$HOME/.local/bin/llc-ksim"
