@@ -1,6 +1,6 @@
 # AHS Tutorial
 
-This repository holds the code of frameworks involved in the tutorial ["AHS: An EDA toolbox for Agile Chip Front-end Design"](https://ericlyun.me/tutorial-aspdac2025/en/master/#ahs-an-eda-toolbox-for-agile-chip-front-end-design).
+This repository holds the code of frameworks involved in the tutorial ["AHS: An EDA toolbox for Agile Chip Front-end Design"](https://ericlyun.me/tutorial-aspdac2025/index.html).
 
 ## Installation
 
