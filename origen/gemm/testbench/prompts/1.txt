@@ -1,0 +1,23 @@
+Please write a SystemVerilog testbench for a GEMM (General Matrix Multiply) hardware kernel module with the following specifications:
+1. Module Configuration:
+- Module name: gemm_kernel_tb
+- Three configurable parameters: NI, NJ, NK (all set to 8)
+- Define corresponding LOG parameters using $clog2 for each dimension
+2. Key Interfaces:
+- Standard control signals: clk, reset, start
+- Output signals:
+    - data_out (32-bit): The computed matrix multiplication result values
+    - valid: Asserted when data_out contains valid result data
+        - The DUT will assert valid for each output element one at a time
+        - Each valid pulse indicates a new element of the result matrix is available on data_out
+        - The testbench should capture data_out when valid is high
+    - done: Asserted when the entire matrix multiplication is complete
+        - Should be asserted after all NI×NJ results have been output
+        - Indicates computation is finished and module is ready for next operation
+        - Used to stop the cycle counter in the testbench
+3. Test Storage:
+- Three 2D arrays for matrices:
+    - Input matrix A[NI][NK]
+    - Input matrix B[NK][NJ]
+    - Output matrix C[NI][NJ]
+- Additional arrays for expected_C and calculated_C for verification

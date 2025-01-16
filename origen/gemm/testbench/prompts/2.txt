@@ -1,0 +1,8 @@
+I encountered a syntax error
+gemm_tb2.sv:86: syntax error
+gemm_tb2.sv:86: Syntax in assignment statement l-value.
+
+The corresponding line is:
+int result_count = 0;
+
+Please fix it.

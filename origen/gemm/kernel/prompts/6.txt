@@ -1,0 +1,1 @@
+Please adjust the bit width of the state definition, as it requires 3 bits.

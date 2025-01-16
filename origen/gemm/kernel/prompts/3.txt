@@ -1,0 +1,14 @@
+Please make the following specific modifications to the gemm_kernel module:
+Incrementing k in COMPUTE: Currently, the increment of k (k <= k + 1;) is done in the READ state. It should be moved to the COMPUTE state and should only happen when k is less than NK-1.
+next_state Logic for COMPUTE in always_comb: The assignment of next_state for the COMPUTE state is currently inside the always_ff block. Move this logic to the always_comb block.
+State Transition from READ: The READ state should unconditionally transition to the COMPUTE state. Modify the always_comb block's logic for the READ state to reflect this:
+READ: begin
+next_state = COMPUTE;
+end
+State Transition from OUTPUT: The OUTPUT state needs to transition to either IDLE or READ based on whether the computation is complete, specifically when i NI - 1 && j NJ - 1.
+Managing valid: Reset valid in a separate always_ff block, triggered by the rising edge of the clock:
+always_ff @(posedge clk) begin
+if (valid) begin
+valid <= 0;
+end
+end

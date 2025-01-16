@@ -1,6 +1,9 @@
 #! /bin/bash
 
+current_dir=$(pwd)
+
 set -e
+trap 'echo "Warning: Installation failed, retrying..."; cd $current_dir; exec "$0" "$@"' ERR
 
 # use install.log to record the installation process
 touch install.log

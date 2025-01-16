@@ -1,0 +1,6 @@
+Please modify the GEMM testbench to write matrices A and B to hex files:
+- Matrix A to "init_a.hex", initialized with i + k
+- Matrix B to "init_b.hex", initialized with k + j
+- Each 32-bit value should be written in hex format, one per line
+
+The hex files will be used by the GEMM kernel for matrix initialization.

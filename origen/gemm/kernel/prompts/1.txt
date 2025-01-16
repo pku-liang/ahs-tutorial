@@ -1,0 +1,68 @@
+Please help implement a SystemVerilog module named gemm_kernel
+Purpose: Computes matrix multiplication C = A × B for matrices stored in memory
+Parameters:
+- NI: Number of rows in matrix A and C
+- NJ: Number of columns in matrix B and C
+- NK: Number of columns in A / rows in B
+Interfaces:
+- Input:  
+  * clk: Clock signal
+  * reset: Reset signal
+  * start: Start signal, input trigger to begin matrix multiplication
+- Output:
+  * data_out[31:0]: Current computation result
+  * valid: Pulses high for one cycle when data_out contains valid result
+  * done: Goes high and stays when entire matrix multiplication is complete
+Memory Requirements:
+- Two dual-port RAM modules:
+  * RAM A: Stores NI×NK matrix, initialized from "init_a.hex"
+  * RAM B: Stores NK×NJ matrix, initialized from "init_b.hex"
+Operation Flow:
+1. Start:
+   - When start is asserted, the module should initiate the matrix multiplication process.
+2. Matrix Multiplication:
+   - The computation of each C[i][j] involves an inner loop that iterates NK times, accumulating the products of corresponding elements from A and B.
+   - Memory accesses to ram_a and ram_b should be managed to retrieve the correct elements for each step of the dot product calculation.
+3. Output:
+   - The data_out signal should output the currently computed element of the output matrix C.
+   - The valid signal should be asserted for one clock cycle when data_out holds a valid computed element.
+4. Completion:
+   - The done signal should be asserted when all NI × NJ elements of matrix C have been computed and output.
+Code Structure:
+module gemm_kernel #( /* parameters _/ )( /_ interface */ );
+// Local parameters, internal signals
+// Instantiate ram_a, ram_b
+// State definitionss (IDLE, READ, COMPUTE, OUTPUT)
+// FSM (always_ff)
+// Combinational logic (update which state to go next)
+endmodule
+dual_port_ram:
+```systemverilog
+module dual_port_ram #(
+    parameter DATA_WIDTH = 32,
+    parameter DATA_DEPTH = 64,
+    parameter ADDR_WIDTH = $clog2(DATA_DEPTH),
+    parameter INIT_FILE = ""
+)(
+    input logic clk,
+    input logic we,
+    input logic start,
+    input logic [ADDR_WIDTH-1:0] addr_in, addr_out,
+    input logic [DATA_WIDTH-1:0] di,
+    output logic [DATA_WIDTH-1:0] dout
+);
+logic [DATA_WIDTH-1:0] ram [DATA_DEPTH-1:0];
+initial begin
+    wait (start);
+    if (INIT_FILE != "") begin
+        $readmemh(INIT_FILE, ram, 0, DATA_DEPTH-1);
+    end
+end
+always @(posedge clk) begin
+    if (we)
+        ram[addr_in] <= di;
+end
+//always output the data of the address for simplicity
+assign dout = ram[addr_out];
+endmodule
+```

@@ -1,0 +1,22 @@
+You've made progress on the gemm_kernel, but there are still a few errors that need fixing:
+Resetting k in COMPUTE: In the COMPUTE state, when k reaches NK - 1, you need to reset k to 0.
+if (k < NK - 1) begin
+    k <= k + 1;
+end else begin
+    k <= 0;
+end
+
+Missing Transition from COMPUTE to READ: In the COMPUTE state within always_comb block, you need to transition back to the READ state if k is still less than NK -1 to read the next set of values from memory.
+if (k == NK - 1) begin
+    next_state = OUTPUT;
+end else begin
+    next_state = READ;
+end
+
+Incorrect Transition from OUTPUT: The transition logic from the OUTPUT state is not quite right. It should transition to READ directly instead of waiting for valid to be high.
+OUTPUT: begin
+if (i == NI - 1 && j == NJ - 1) begin
+next_state = IDLE;
+end else begin
+next_state = READ; 
+end
