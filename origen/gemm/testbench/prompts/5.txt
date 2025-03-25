@@ -1,1 +1,0 @@
-Could you add a cycle counter to the testbench to measure how many clock cycles the kernel takes from 'start' to 'done' and add a timeout check? Just need to print the total cycles or timeout at the end.

@@ -84,8 +84,6 @@ if ! grep -q "popa" install.log; then
     cmake --build build
     cmake --install build --prefix install
     cd ..
-    ln -s popa/examples/hls-tutorial.sh ./hls-tutorial.sh
-    chmod +x hls-tutorial.sh
     echo "popa built" >> install.log
 else
     echo "|-- already exists"
@@ -95,14 +93,14 @@ echo "Building ksim..."
 if ! grep -q "ksim" install.log; then
     cd ksim
     mkdir -p install
-    export INSTALL_PREFIX=$PWD/install
     git submodule update --init --recursive
     cd third_party
     ./setup-circt.sh
     ./setup-lemon.sh
     cd ..
     mkdir -p build && cd build
-    cmake .. -DMLIR_DIR=$INSTALL_PREFIX/install/lib/cmake/mlir -DLLVM_DIR=$INSTALL_PREFIX/install/lib/cmake/llvm -DCIRCT_DIR=$INSTALL_PREFIX/install/lib/cmake/circt -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DCMAKE_BUILD_TYPE=Release -GNinja
+    echo "INSTALL_PREFIX: $INSTALL_PREFIX"
+    INSTALL_PREFIX=/root/repos/ksim/install cmake .. -DMLIR_CMAKE_DIR=$INSTALL_PREFIX/install/lib/cmake/mlir -DLLVM_CMAKE_DIR=$INSTALL_PREFIX/install/lib/cmake/llvm -DCIRCT_CMAKE_DIR=$INSTALL_PREFIX/install/lib/cmake/circt -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DCMAKE_BUILD_TYPE=Release -GNinja
     ninja ksim ksim-opt
     ninja install
     echo "cp ksim->$HOME/.local/bin/ksim, firtool->$HOME/.local/bin/firtool-ksim, llc->$HOME/.local/bin/llc-ksim"
@@ -112,19 +110,6 @@ if ! grep -q "ksim" install.log; then
     cp ./install/bin/llc $HOME/.local/bin/llc-ksim
     cd ..
     echo "ksim built" >> install.log
-else
-    echo "|-- already exists"
-fi
-
-echo "Building iverilog..."
-if ! grep -q "iverilog" install.log; then
-    cd iverilog
-    sh autoconf.sh
-    ./configure --prefix=$HOME/.local
-    make
-    make install
-    cd ..
-    echo "iverilog built" >> install.log
 else
     echo "|-- already exists"
 fi

@@ -1,1 +1,0 @@
-It’s too complicated, use a simpler 8-bit adder design in SystemVerilog.
