@@ -70,6 +70,7 @@ if ! grep -q "hector" install.log; then
     cmake -G Ninja -DMLIR_DIR=../llvm-project/build/lib/cmake/mlir -B build
     cmake --build build
     cp ./build/bin/* $HOME/.local/bin/
+    ln -s $(which hector-opt) ./hector
     cd ..
     echo "hector built" >> install.log
 else
